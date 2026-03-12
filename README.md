@@ -5,7 +5,6 @@ A basic PHP-based student management system.
 ## Features
 - Add new students
 - View all students
-- Edit student records
 - Delete students
 
 ## Technologies
