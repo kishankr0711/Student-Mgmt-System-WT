@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management System</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Management System</h1>
+        
+        <form action="index.php" method="POST">
+            <h2>Add New Student</h2>
+            
+            <label>Student ID</label>
+            <input type="text" name="student_id" required>
+            
+            <label>Student Name</label>
+            <input type="text" name="student_name" required>
+            
+            <label>Class</label>
+            <input type="text" name="class" required>
+            
+            <label>Age</label>
+            <input type="text" name="age" required>
+            
+            <label>Address</label>
+            <textaarea name="address" rows="3"></textarea>
+            
+            <div class="button-group">
+                <input type="submit" name="submit" value="Add Student">
+                <input type="reset" value="Clear">
+            </div>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.php" class="button">View All Students</a>
+        </div>
+    </div>
+</body>
+</html>
