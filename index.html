@@ -1,40 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management System</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Student Management System</h1>
-        
-        <form action="index.php" method="POST">
-            <h2>Add New Student</h2>
-            
-            <label>Student ID</label>
-            <input type="text" name="student_id" required>
-            
-            <label>Student Name</label>
-            <input type="text" name="student_name" required>
-            
-            <label>Class</label>
-            <input type="text" name="class" required>
-            
-            <label>Age</label>
-            <input type="text" name="age" required>
-            
-            <label>Address</label>
-            <textaarea name="address" rows="3"></textarea>
-            
-            <div class="button-group">
-                <input type="submit" name="submit" value="Add Student">
-                <input type="reset" value="Clear">
-            </div>
-        </form>
-        
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="index.php" class="button">View All Students</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">S.M.S.</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#add-student">Add Student</a></li>
+                <li><a href="#view-students">View Students</a></li>
+            </ul>
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Student Management System</h1>
+            <p>This Platform is build for manage the details of students.</p>
+            <div class="section-header">
+                <h2>Features</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Add Records</h3>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗑️</div>
+                    <h3>Delete Records</h3>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>View All</h3>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="#add-student" class="btn btn-primary">Add Student</a>
+                <a href="#view-students" class="btn btn-secondary">View All</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Student Section -->
+    <section id="add-student" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Add New Student</h2>
+                <p>Enter student details</p>
+            </div>
+            
+            <div class="form-container">
+                <form action="index.php" method="POST" class="student-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Student ID</label>
+                            <input type="text" name="student_id" placeholder="Enter ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Student Name</label>
+                            <input type="text" name="student_name" placeholder="Enter Name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Class</label>
+                            <input type="text" name="class" placeholder="Enter Class" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" name="age" placeholder="Enter Age" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Address</label>
+                        <textarea name="address" rows="3" placeholder="Enter Address"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" name="submit" class="btn btn-primary"> Add Student</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- View Students Section -->
+    <section id="view-students" class="section section-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2>View All Students</h2>
+                <p>Manage existing student records</p>
+            </div>
+            
+            <div class="action-bar">
+                <a href="index.php" class="btn btn-primary">Load Students</a>
+            </div>
+            
+            <div class="info-box">
+                <p>Click "Load Students" to view, edit, or delete student records from the database.</p>
+            </div>
+        </div>
+    </section>
+
 </body>
 </html>

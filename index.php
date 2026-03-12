@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 
 // Initialize message variable
 $message = "";
+$message_type = "success";
 
 // Handle Add Student Form Submission
 if(isset($_POST['submit'])) {
@@ -31,6 +32,7 @@ if(isset($_POST['submit'])) {
         $message = "Student added successfully!";
     } else {
         $message = "Error: " . $conn->error;
+        $message_type = "error";
     }
 }
 
@@ -42,6 +44,7 @@ if(isset($_GET['delete'])) {
         $message = "Student deleted successfully!";
     } else {
         $message = "Error deleting record: " . $conn->error;
+        $message_type = "error";
     }
 }
 
@@ -66,6 +69,7 @@ if(isset($_POST['update'])) {
         $message = "Student updated successfully!";
     } else {
         $message = "Error updating record: " . $conn->error;
+        $message_type = "error";
     }
 }
 
@@ -81,91 +85,93 @@ if(isset($_GET['edit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Management System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - View</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Student Management System</h1>
-        
-        <?php if($message != "") { ?>
-            <div class="message"><?php echo $message; ?></div>
-        <?php } ?>
-        
-        <?php if($edit_mode) { ?>
-        <!-- Edit Form -->
-        <form method="POST" action="">
-            <h2>Edit Student</h2>
-            
-            <input type="hidden" name="id" value="<?php echo $edit_data['id']; ?>">
-            
-            <label>Student ID</label>
-            <input type="text" name="student_id" value="<?php echo $edit_data['student_id']; ?>" required>
-            
-            <label>Student Name</label>
-            <input type="text" name="student_name" value="<?php echo $edit_data['student_name']; ?>" required>
-            
-            <label>Class</label>
-            <input type="text" name="class" value="<?php echo $edit_data['class']; ?>" required>
-            
-            <label>Age</label>
-            <input type="number" name="age" value="<?php echo $edit_data['age']; ?>" required>
-            
-            <label>Address</label>
-            <textarea name="address" rows="3"><?php echo $edit_data['address']; ?></textarea>
-            
-            <div class="button-group">
-                <input type="submit" name="update" value="Update Student">
-                <a href="index.php" class="button">Cancel</a>
-            </div>
-        </form>
-        <?php } ?>
-        
-        <!-- Display All Students -->
-        <h2>All Students</h2>
-        <?php
-        $sql = "SELECT * FROM students";
-        $result = $conn->query($sql);
-        
-        if ($result->num_rows > 0) {
-            echo "<table>";
-            echo "<tr>
-                    <th>ID</th>
-                    <th>Student ID</th>
-                    <th>Name</th>
-                    <th>Class</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Actions</th>
-                  </tr>";
-            
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["student_id"] . "</td>";
-                echo "<td>" . $row["student_name"] . "</td>";
-                echo "<td>" . $row["class"] . "</td>";
-                echo "<td>" . $row["age"] . "</td>";
-                echo "<td>" . $row["address"] . "</td>";
-                echo "<td>";
-                echo "<a href='index.php?edit=" . $row["id"] . "' class='edit-btn'>Edit</a>";
-                echo "<a href='index.php?delete=" . $row["id"] . "' class='delete-btn' onclick='return confirm(\"Are you sure?\")'>Delete</a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "<div class='empty-state'>No students found.</div>";
-        }
-        
-        $conn->close();
-        ?>
-        
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="index.html" class="button">Add New Student</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SMS</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#add-student">Add Student</a></li>
+                <li><a href="#" class="active">View Students</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
         </div>
-    </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="section section-gray">
+        <div class="container">
+            
+            <?php if($message != "") { ?>
+                <div class="message message-<?php echo $message_type; ?>">
+                    <?php echo $message; ?>
+                </div>
+            <?php } ?>
+
+            <!-- Students Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>All Students</h2>
+                </div>
+                
+                <?php
+                $sql = "SELECT * FROM students";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                    echo "<div class='table-responsive'>";
+                    echo "<table class='data-table'>";
+                    echo "<thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Age</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>";
+                    
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["id"] . "</td>";
+                        echo "<td><span class='badge'>" . $row["student_id"] . "</span></td>";
+                        echo "<td><strong>" . $row["student_name"] . "</strong></td>";
+                        echo "<td>" . $row["class"] . "</td>";
+                        echo "<td>" . $row["age"] . "</td>";
+                        echo "<td>" . $row["address"] . "</td>";
+                        echo "<td class='actions'>
+                                <a href='index.php?delete=" . $row["id"] . "' class='btn-icon delete' title='Delete' onclick='return confirm(\"Are you sure you want to delete this student?\")'>🗑️</a>
+                              </td>";
+                        echo "</tr>";
+                    }
+                    echo "</tbody></table>";
+                    echo "</div>";
+                } else {
+                    echo "<div class='empty-state'>
+                            <div class='empty-icon'>📭</div>
+                            <h3>No Students Found</h3>
+                            <p>Start by adding your first student record</p>
+                            <a href='index.html#add-student' class='btn btn-primary'>Add Student</a>
+                          </div>";
+                }
+                
+                $conn->close();
+                ?>
+            </div>
+        </div>
+    </section>
+
+
 </body>
 </html>
